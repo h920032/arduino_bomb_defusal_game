@@ -1,43 +1,23 @@
 #include <TM1637Display.h>
-#include <Servo.h>
 
-const int CLK = 2; //Set the CLK pin connection to the display
-const int DIO = 3; //Set the DIO pin connection to the display
+const int CLK = 3; //Set the CLK pin connection to the display
+const int DIO = 2; //Set the DIO pin connection to the display
 
 TM1637Display display(CLK, DIO);  //set up the 4-Digit Display.
 
-int start = 4;
-int Relay1 = 21; // 落牌單張
-int Relay2 = 22; // 落瀑布牌
-int Relay3 = 23; // 落球3
-int Relay4 = 24; // 落球2
-int Relay5 = 25; // 結尾蘋果
-int Relay6 = 26; // 落球1
-int Relay7 = 27; // 開場蘋果
-int Relay8 = 28; // 緩降球
-int Relay9 = 29; // 落絲巾
-int Relay10 = 30;// 結尾落帽子
-int Relay11 = 31;// 五球5
-int Relay12 = 32;// 五球4
-int Relay13 = 33;// 五牌2
-int Relay14 = 34;// 五球3
-int Relay15 = 35;// 五球2
-int Relay16 = 36;// 五牌1
-int Relay17 = 37;// 五球1
-int Relay18 = 38;
-int Relay19 = 39;
-int Relay20 = 40;
+int Sound = 0;
+int Wire1 = 4;
+int Wire2 = 5;
+int Wire3 = 6;
+int Wire4 = 7;  
+int Wire5 = 8;
+int Wire6 = 9;
+int Wire7 = 10;
+int Wire8 = 11;
 
-Servo servo1;
-Servo servo2;
-Servo servo3;
-Servo servo4;
-int Ser1 = 6;
-int Ser2 = 7;
-int Ser3 = 8;
-int Ser4 = 9;
-int count = 1;
-int bottonstate = 0;
+int Trigger = 12;
+int Led = 13;
+
 bool flag = true;
 unsigned long endtime = 600; //5400 max
 
