@@ -1,4 +1,4 @@
-#include <TM1637Display.h>
+#include "TM1637Display.h"
 
 const int CLK = 3; //Set the CLK pin connection to the display
 const int DIO = 2; //Set the DIO pin connection to the display
@@ -24,26 +24,6 @@ unsigned long endtime = 600; //5400 max
 unsigned long time[2] = {0, 0}; // 記錄運行時間
 unsigned long timestart = 0;
 
-void setRelayTime(int relayNum, int startTime, int endTime)
-{
-  if (time[0]/100 == startTime)
-  {
-    digitalWrite(relayNum, HIGH);
-  }
-  if (time[0]/100 == endTime)
-  {
-    digitalWrite(relayNum, LOW);
-  }
-}
-
-void setServoTime(Servo servo, int setTime, int degree)
-{
-  if (time[0]/100 == setTime)
-  {
-    servo.write(degree);
-  }
-}
-
 int transTime(int minTime, float secTime)
 {
   return (minTime * 600 + secTime * 10);
@@ -53,38 +33,17 @@ uint8_t segto;
 
 void setup()
 {
-  pinMode(start, INPUT);
-  pinMode(Relay1, OUTPUT);
-  pinMode(Relay2, OUTPUT);
-  pinMode(Relay3, OUTPUT);
-  pinMode(Relay4, OUTPUT);
-  pinMode(Relay5, OUTPUT);
-  pinMode(Relay6, OUTPUT);
-  pinMode(Relay7, OUTPUT);
-  pinMode(Relay8, OUTPUT);
-  pinMode(Relay9, OUTPUT);
-  pinMode(Relay10, OUTPUT);
-  pinMode(Relay11, OUTPUT);
-  pinMode(Relay12, OUTPUT);
-  pinMode(Relay13, OUTPUT);
-  pinMode(Relay14, OUTPUT);
-  pinMode(Relay15, OUTPUT);
-  pinMode(Relay16, OUTPUT);
-  pinMode(Relay17, OUTPUT);
-  pinMode(Relay18, OUTPUT);
-  pinMode(Relay19, OUTPUT);
-  pinMode(Relay20, OUTPUT);
-  
-  servo1.attach(Ser1);
-  servo2.attach(Ser2);
-  servo3.attach(Ser3);
-  servo4.attach(Ser4);
-
-/* -----預設角度----- */
-  servo1.write(90);
-  // servo2.write(180);
-  // servo3.write(180);
-  // servo4.write(180);
+  pinMode(Sound, OUTPUT);
+  pinMode(Wire1, INPUT);
+  pinMode(Wire2, INPUT);
+  pinMode(Wire3, INPUT);
+  pinMode(Wire4, INPUT);
+  pinMode(Wire5, INPUT);
+  pinMode(Wire6, INPUT);
+  pinMode(Wire7, INPUT);
+  pinMode(Wire8, INPUT);
+  pinMode(Trigger, OUTPUT);
+  pinMode(Led, OUTPUT);
   
   display.setBrightness(0x0a);  //set the diplay to maximum brightness
   display.clear();
@@ -96,11 +55,6 @@ void setup()
 
 void loop()
 {
-  bottonstate = digitalRead(start);
-  if (bottonstate != 0)
-  {
-    count = 0;
-  }
   if (count == 0)
   {
     display.clear();
