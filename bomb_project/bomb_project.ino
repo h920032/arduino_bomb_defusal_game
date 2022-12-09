@@ -1,13 +1,15 @@
 #include "pin_define.h"
 #include "pitches.h"
 
-int MatchTable[] = {2, 5, 7, 3, 4, 1, 6, 8};
-
+int matchlist[] = {2, 5, 7, 3, 4, 1, 6, 8};
 bool flag = true;
-unsigned long endtime = 600; //5400 max
+unsigned long countdown = 8 * 60 * 1000; //5400 max
 
 unsigned long time[2] = {0, 0}; // 記錄運行時間
 unsigned long timestart = 0;
+
+int goodcount = 0;
+int badcount = 0;
 
 int transTime(int minTime, float secTime)
 {
@@ -19,9 +21,7 @@ uint8_t segto;
 void checkstate(int **wirelist, int *statelist)
 {
   for(int i = 0; i < WIRENUM; i++)
-  {
     statelist[i] = digitalRead(*wirelist[i]);
-  }
 }
 
 int checkbomb(int *statelist, int *matchlist, int *goodcount, int *badcount)
@@ -63,6 +63,7 @@ void setup()
   int *wirelist[] = {&Wire1, &Wire2, &Wire3, &Wire4, &Wire5, &Wire6, &Wire7, &Wire8};
   int statelist[WIRENUM];
   checkstate(wirelist, statelist);
+  checkbomb(statelist, matchlist, &goodcount, &badcount);
  
   display.setBrightness(0x0a);  //set the diplay to maximum brightness
   display.clear();
@@ -87,13 +88,13 @@ void loop()
     { 
       //避免1毫秒運行2次
       time[1] = time[0];
-      int minute = time[0] / 60000;
-      int second = (time[0] % 60000) / 1000;
+      int minute = (countdown - time[0]) / 60000;
+      int second = ((countdown - time[0]) % 60000) / 1000;
       int t = (minute * 100 + second);
       display.showNumberDec(t);
       segto = 0x80 | display.encodeDigit(minute);
       display.setSegments(&segto, 1, 1);
-      if (time[0] >= endtime*7200)
+      if (time[0] >= countdown)
       {
         flag = false;
       }
