@@ -1,4 +1,5 @@
 #include "pin_define.h"
+#include "pitches.h"
 
 int MatchTable[] = {2, 5, 7, 3, 4, 1, 6, 8};
 
@@ -15,6 +16,36 @@ int transTime(int minTime, float secTime)
 
 uint8_t segto;
 
+void checkstate(int **wirelist, int *statelist)
+{
+  for(int i = 0; i < WIRENUM; i++)
+  {
+    statelist[i] = digitalRead(*wirelist[i]);
+  }
+}
+
+int checkbomb(int *statelist, int *matchlist, int *goodcount, int *badcount)
+{
+  int o_goodcount = *goodcount;
+  int o_badcount = *badcount;
+  for(int i = 0; i < WIRENUM; i++)
+  {
+    if(statelist[i])
+    {
+      if(matchlist[i] <= (WIRENUM / 2))
+        *goodcount++;
+      else
+        *badcount++;
+    }
+  }
+  if(*goodcount == 0)
+    return 2;
+  else if(o_badcount != *badcount)
+    return 1;
+  else 
+    return 0;
+}
+
 void setup()
 {
   pinMode(Sound, OUTPUT);
@@ -28,7 +59,11 @@ void setup()
   pinMode(Wire8, INPUT);
   pinMode(Trigger, OUTPUT);
   pinMode(Led, OUTPUT);
-  
+
+  int *wirelist[] = {&Wire1, &Wire2, &Wire3, &Wire4, &Wire5, &Wire6, &Wire7, &Wire8};
+  int statelist[WIRENUM];
+  checkstate(wirelist, statelist);
+ 
   display.setBrightness(0x0a);  //set the diplay to maximum brightness
   display.clear();
   display.showNumberDec(0);
