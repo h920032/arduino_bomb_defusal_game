@@ -19,3 +19,5 @@ int Wire8 = 11;
 
 int Trigger = 12;
 int Led = 13;
+
+int *wirelist[] = {&Wire1, &Wire2, &Wire3, &Wire4, &Wire5, &Wire6, &Wire7, &Wire8};
