@@ -1,32 +1,49 @@
+//Including header files
 #include "pin_define.h"
 #include "pitches.h"
 
+//Array containing the sequence in which the wires need to be deactivated
 int matchlist[] = {2, 5, 7, 3, 4, 1, 6, 8};
+
+//Flag to check if bomb is active or not
 bool flag = true;
+
+//Setting countdown timer to 8 minutes (8*60000 milliseconds)
 unsigned long countdown = 8 * 60000; //5400 max
 
-unsigned long time[2] = {0, 0}; // 記錄運行時間
+//Array to hold time values
+unsigned long time[2] = {0, 0};
+
+//Start time variable
 unsigned long timestart = 0;
 
+//Variables to hold the count of correct and incorrect wire deactivation attempts
 int goodcount = 0;
 int badcount = 0;
 
+//Array to hold the state of each wire (activated or deactivated)
 int statelist[WIRENUM];
 
+//Variable to hold the state of bomb
 int state = -1;
+
+//Function to convert minutes and seconds to milliseconds
 int transTime(int minTime, float secTime)
 {
   return (minTime * 600 + secTime * 10);
 }
 
+//Variable to hold the segment value for the 7-segment display
 uint8_t segto;
 
+//Function to check the state of each wire (if they are activated or deactivated)
 void checkstate(int **wirelist, int *statelist)
 {
   for(int i = 0; i < WIRENUM; i++)
     statelist[i] = digitalRead(*wirelist[i]);
 }
 
+//Function to check if the bomb is defused or not
 int checkbomb(int *statelist, int *matchlist, int &goodcount, int &badcount)
 {
   int o_goodcount = goodcount;
@@ -51,6 +68,7 @@ int checkbomb(int *statelist, int *matchlist, int &goodcount, int &badcount)
     return 0;
 }
 
+//Initialization function to setup input and output pins
 void setup()
 {
   pinMode(Sound, OUTPUT);
@@ -76,6 +94,7 @@ void setup()
   // Serial.begin(9600);
 }
 
+//Main loop function to manage bomb countdown, check wire states and display status
 void loop()
 {
   display.clear();
@@ -84,6 +103,7 @@ void loop()
   display.setSegments(&segto, 1, 1);
   timestart = millis();
   flag = true;
+  //Continuously checks the state of the bomb and updates the countdown timer
   while (flag)
   {
     
@@ -103,6 +123,8 @@ void loop()
     */
     
     time[0] = millis() - timestart;
+    
+    //Check if the bomb defusing attempt was successful or not
     if (time[1] != time[0])
     { 
       //避免1毫秒運行2次
@@ -142,6 +164,7 @@ void loop()
     state = 2;
   }
   
+  //Infinite loop to halt the execution once the bomb is defused or triggered
   while(!flag)
   {
     
