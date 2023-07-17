@@ -1,4 +1,4 @@
-# Bomb Wire Defusal Game
+# Arduino Bomb Wire Defusal Game
 
 This Arduino program simulates a wire defusal game that includes several wires, a countdown timer, and a mechanism to check whether the game is successfully completed or not.
 
