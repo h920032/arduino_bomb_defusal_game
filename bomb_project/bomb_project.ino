@@ -1,3 +1,20 @@
+// This code is for a bomb defusal game.
+// It uses the 8 wires to represent the bomb, and the buzzer to sound an alarm.
+
+// The code starts by defining some constants, such as the pin numbers for the wires and the buzzer.
+// It also defines a function, `transTime()`, which is used to convert the time into a number that can be displayed on the LED display.
+
+// The `setup()` function initializes the Arduino's pins and starts the LED display.
+// The `loop()` function is the main loop of the program.
+// It checks the state of the wires and the buzzer, and takes appropriate action.
+
+// The state of the game can be one of three:
+// 0: The game is in progress.
+// 1: The bomb has exploded.
+// 2: The bomb has been defused.
+
+// The code also includes some comments to explain the different parts of the code.
+
 //Including header files
 #include "pin_define.h"
 #include "pitches.h"
