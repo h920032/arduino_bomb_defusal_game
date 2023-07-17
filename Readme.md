@@ -7,7 +7,7 @@ This Arduino program simulates a wire defusal game that includes several wires, 
 The `matchlist` array contains the correct sequence of wires to be cut in order to successfully defuse the "bomb". The game begins with a countdown timer and the user attempts to cut the wires in the correct order. If the wires are not cut in the correct sequence or if the timer runs out, the game ends.
 
 ## Demo
-[![Arduino Bomb Wire Defusal Demo](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)]([Arduino Bomb Wire Defusal Game](https://youtu.be/PTh7J8gH7MI))
+[![Arduino Bomb Wire Defusal Demo](https://imgur.com/pa6E75I.jpg)](=https://youtu.be/PTh7J8gH7MI)
 
 ## Variables
 
