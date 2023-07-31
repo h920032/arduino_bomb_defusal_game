@@ -1,0 +1,33 @@
+---
+name: Arduino_CI
+
+on: [push, pull_request]
+
+jobs:
+  arduino_ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arduino-platform: ['arduino:avr']
+        fqbn: ['arduino:avr:nano']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Install Arduino Cli
+        uses: arduino/setup-arduino-cli@v1
+
+      - name: Install Platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install ${{matrix.arduino-platform}}
+
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn ${{matrix.fqbn}} ./bomb_project/bomb_project.ino --output-dir ./bomb_project_nano
+        
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bomb_project_nano
+          path: ./bomb_project_nano
+          retention-days: 30
