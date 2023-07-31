@@ -23,8 +23,7 @@ jobs:
           arduino-cli core install ${{matrix.arduino-platform}}
 
       - name: Compile Sketch
-        working-directory: ./bomb_project
-        run: arduino-cli compile --fqbn ${{matrix.fqbn}} ./bomb_project.ino --output-dir ./bomb_project_nano
+        run: arduino-cli compile --fqbn ${{matrix.fqbn}} ./bomb_project --output-dir ./bomb_project_nano
         
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
